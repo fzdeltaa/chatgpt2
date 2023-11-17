@@ -1,0 +1,59 @@
+<div class="card-body p-md-5 mx-md-4">
+  <div class="text-center">
+    <h4 class="mt-1 mb-5 pb-1">REGISTER</h4>
+  </div>
+  <form action="" method="post">
+    <% if params['error'] %>
+      <h5 class="text-center text-danger"><%= params['error'] %></h5>
+    <% end %>
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example11">Username</label>
+      <input type="text" id="username" class="form-control" name="username" required/>
+    </div>
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example11">Display Name</label>
+      <input type="text" id="displayname" class="form-control" name="displayname" maxlength="20" required/>
+    </div>
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example22">Password</label>
+      <input type="password" id="password" class="form-control" name="password" required/>
+    </div>
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example22">Reenter Password</label>
+      <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" required/>
+    </div>
+    <p id="passwordMismatch" style="color: red; display: none;">Passwords do not match.</p>
+    <%# <div class="text-center pt-1 mb-5 pb-1">
+      <button class="btn btn-primary btn-block gradient-custom-2 mb-3" type="submit" onclick="return validateForm()">Register</button>
+    </div> %>
+    <div class="d-flex align-items-center justify-content-center pb-4">
+      <div>
+        <a href="/login">
+          <button type="button" class="btn btn-outline-danger btn-block gradient-custom-2 mb-3">Login</button>
+        </a>
+      </div>
+      <button class="btn btn-primary btn-block gradient-custom-2 mb-3" type="submit" onclick="return validateForm()">Register</button>
+    </div>
+  </form>
+  <script>
+    function validateForm() {
+      var password = document.getElementById('password').value;
+      var confirmPassword = document.getElementById('confirmPassword').value;
+      var mismatchMessage = document.getElementById('passwordMismatch');
+      var username = document.getElementById('username').value;
+
+      if (username.indexOf(' ') !== -1) {
+        alert('Username tidak boleh mengandung spasi.');
+        return false; // Menghentikan pengiriman formulir jika terdapat spasi
+      }
+      if (password !== confirmPassword) {
+        alert('Password yang diisi harus sama.');
+        return false;
+      } else {
+        mismatchMessage.style.display = 'none';
+        return true;
+      }
+
+    }
+  </script>
+</div>

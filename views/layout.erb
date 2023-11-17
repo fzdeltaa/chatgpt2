@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatku</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="/assets/css/all.css">
+  </head>
+  <body>
+    <section class="vh-100 gradient-form" style="background-color: #eee;">
+      <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="card rounded-3 text-black">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/bootstrap.js"></script>
+  </body>
+</html>

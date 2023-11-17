@@ -1,0 +1,90 @@
+<div class="row card-body" style="min-height: 100%;">
+  <div class="col-4">
+    <h5 style="overflow: hidden;"><%=@displayname%></h5>
+    <div class="input-group">
+      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                  aria-describedby="search-addon" />
+      <button type="button" class="btn btn-outline-primary">search</button>
+    </div>
+    <div class="card-body p-4" style="height: 540px; overflow: auto;">
+      <ul class="list-unstyled mb-0">
+        <% @users.each do |user| %>
+          <li class="p-2 border-bottom">
+            <a href="<%=user.userid%>" class="d-flex justify-content-between">
+              <div class="d-flex flex-row">
+                <div class="pt-1">
+                  <p class="fw-bold mb-0"><%=user.displayname%></p>
+                  <p class="small text-muted">Lorem ipsum dolor sit.</p>
+                </div>
+              </div>
+              <div class="pt-1">
+                <p class="small text-muted mb-1">5 mins ago</p>
+              </div>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <!-- kanan -->
+  <div class="col-8">
+    <div class="card-header bg-transparent">
+      <div class="navbar navbar-expand p-0">
+        <h3 class="fw-bold mb-0"><%=@receiver.displayname%></h3>
+      </div>
+    </div>
+    <div class="card-body p-4" style="height: 500px; overflow: auto;">
+      <% if @messages %>
+        <% @messages.each do |message| %>
+          <% if message.receiverid != @receiver.userid %>
+            <div class="d-flex align-items-baseline mb-4">
+              <div class="pe-2">
+                <div>
+                  <div class="card card-text d-inline-block p-2 px-3 m-1"><%=message.content%>
+                  </div>
+                </div>
+                <div>
+                  <div class="small"><%=message.timestamp%></div>
+                </div>
+              </div>
+            </div>
+          <% else %>
+            <div class="d-flex align-items-baseline text-end justify-content-end mb-4">
+              <div class="pe-2">
+                <div>
+                  <div class="card card-text d-inline-block p-2 px-3 m-1"><%=message.content%></div>
+                </div>
+                <div>
+                  <div class="small"><%=message.timestamp%></div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="card-footer bg-white position-absolutebottom-0 m-0 p-1">
+      <form action="/messages/:userid" method="post">
+        <div class="input-group">
+          <div class="input-group-text bg-transparent border-0">
+            <button class="btn btn-light text-secondary">
+              <i class="fas fa-paperclip"></i>
+            </button>
+          </div>
+          <input type="text" class="form-control border-0" placeholder="Write a message..." name="content">
+          <input type="hidden" name="receiverid" value="<%=@receiver.userid%>">
+          <div class="input-group-text bg-transparent border-0">
+            <button class="btn btn-light text-secondary">
+              <i class="fas fa-lock"></i>
+            </button>
+          </div>
+          <div class="input-group-text bg-transparent border-0">
+            <button class="btn btn-light text-secondary" type="submit">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activemodel (7.1.2)
+      activesupport (= 7.1.2)
+    activerecord (7.1.2)
+      activemodel (= 7.1.2)
+      activesupport (= 7.1.2)
+      timeout (>= 0.4.0)
+    activesupport (7.1.2)
+      base64
+      bigdecimal
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      connection_pool (>= 2.2.5)
+      drb
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      mutex_m
+      tzinfo (~> 2.0)
+    base64 (0.2.0)
+    bigdecimal (3.1.4)
+    concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
+    digest (3.1.1)
+    drb (2.2.0)
+      ruby2_keywords
+    htmlbeautifier (1.4.2)
+    i18n (1.14.1)
+      concurrent-ruby (~> 1.0)
+    minitest (5.20.0)
+    mustermann (3.0.0)
+      ruby2_keywords (~> 0.0.1)
+    mutex_m (0.2.0)
+    mysql2 (0.5.5)
+    rack (2.2.8)
+    rack-protection (3.1.0)
+      rack (~> 2.2, >= 2.2.4)
+    ruby2_keywords (0.0.5)
+    sinatra (3.1.0)
+      mustermann (~> 3.0)
+      rack (~> 2.2, >= 2.2.4)
+      rack-protection (= 3.1.0)
+      tilt (~> 2.0)
+    sinatra-activerecord (2.0.27)
+      activerecord (>= 4.1)
+      sinatra (>= 1.0)
+    tilt (2.3.0)
+    timeout (0.4.1)
+    tzinfo (2.0.6)
+      concurrent-ruby (~> 1.0)
+
+PLATFORMS
+  x64-mingw-ucrt
+
+DEPENDENCIES
+  activerecord
+  digest
+  htmlbeautifier
+  mysql2
+  sinatra
+  sinatra-activerecord
+
+BUNDLED WITH
+   2.4.22
