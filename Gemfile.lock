@@ -25,6 +25,11 @@ GEM
     digest (3.1.1)
     drb (2.2.0)
       ruby2_keywords
+    et-orbi (1.2.7)
+      tzinfo
+    fugit (1.9.0)
+      et-orbi (~> 1, >= 1.2.7)
+      raabro (~> 1.4)
     htmlbeautifier (1.4.2)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
@@ -33,10 +38,13 @@ GEM
       ruby2_keywords (~> 0.0.1)
     mutex_m (0.2.0)
     mysql2 (0.5.5)
+    raabro (1.4.0)
     rack (2.2.8)
     rack-protection (3.1.0)
       rack (~> 2.2, >= 2.2.4)
     ruby2_keywords (0.0.5)
+    rufus-scheduler (3.9.1)
+      fugit (~> 1.1, >= 1.1.6)
     sinatra (3.1.0)
       mustermann (~> 3.0)
       rack (~> 2.2, >= 2.2.4)
@@ -59,6 +67,7 @@ DEPENDENCIES
   digest
   htmlbeautifier
   mysql2
+  rufus-scheduler
   sinatra
   sinatra-activerecord
 

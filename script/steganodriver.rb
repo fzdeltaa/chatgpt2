@@ -12,5 +12,8 @@ def encrypt_stegano(image)
 end
 
 def decrypt_stegano(image)
-  Steganogrator.recoverate(image, 8).save("hasilterakhir.png")
+  time = Time.new
+  name = "#{time.strftime("%s")}#{rand(1..100)}.png"
+  Steganogrator.recoverate(image, 8).save("./public/temp/#{name}")
+  name
 end

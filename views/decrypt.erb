@@ -1,0 +1,25 @@
+<div class="card-body p-md-5 mx-md-4">
+  <div class="text-center">
+    <h4 class="mt-1 mb-5 pb-1">Decrypt Gambar</h4>
+
+    <% if @hasil %>
+      <img src="<%=@hasil%>">
+    <% end %>
+
+  </div>
+  <form action="/decrypt" method="post" enctype="multipart/form-data">
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example11">File</label>
+      <input type="file" id="form2Example11" class="form-control" accept=".png" name="file" required/>
+    </div>
+    <div class="text-center pt-1 mb-5 pb-1">
+      <button class="btn btn-primary btn-block gradient-custom-2 mb-3" type="submit">Decrypt</button>
+    </div>
+  </form>
+  <div class="d-flex flex-column justify-content-center pb-4 text-center">
+    <p class="mb-0 me-2">Kembali ke Menu utama</p>
+    <a href="/">
+      <button type="button" class="btn btn-outline-primary">Kembali</button>
+    </a>
+  </div>
+</div>

@@ -49,24 +49,24 @@ post '/messages/:userid' do
   username = User.find(params['receiverid']).username
   content = encrypt_aes(content, username)
   if params['file']
-    filename = params[:file][:filename]
+    time = Time.new
+    filename = "#{time.strftime("%s")}#{rand(1..100)}.png"
     file = params[:file][:tempfile]
 
     File.open("./public/img/#{filename}", 'wb') do |f|
       f.write(file.read)
     end
-    
+
     if params['reverse'] == 'benar'
       image_path = "./public/img/#{filename}"
       newfilename = encrypt_stegano(ChunkyPNG::Image.from_file(image_path))
       filename = "/img/#{newfilename}"
+      File.delete(image_path)
     else
       filename = "/img/#{filename}"
     end
-    
   end
 
-  
   Message.create(senderid: session[:userid], receiverid: params['receiverid'], content: content, image_url: filename)
   params.delete('file')
   redirect "/messages/#{params['receiverid']}"
