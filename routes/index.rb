@@ -12,23 +12,30 @@ get '/messages/?:userid?' do
   subquery = Message.select('MAX(messageid) AS max_id')
                     .group('LEAST(senderid, receiverid), GREATEST(senderid, receiverid)')
 
-  @users = Message.select('messages.*, users.userid, users.displayname')
+  @users = Message.select('messages.*, users.userid, users.displayname, users.username')
                   .joins('INNER JOIN users ON (messages.senderid = users.userid OR messages.receiverid = users.userid)')
                   .where("(messages.senderid = ? OR messages.receiverid = ?) AND messages.messageid IN (#{subquery.to_sql})", session[:userid], session[:userid])
                   .where.not('users.userid = ?', session[:userid])
+  @users.each do |user|
+    receiver_username = User.find(user.receiverid).username
+    user.content = decrypt_aes(user.content, receiver_username)
+  end
 
   @displayname = User.find(session[:userid]).displayname
 
   if params[:userid]
+    if params[:userid] == session[:userid]
+      redirect '/'
+    end
     begin
       @receiver = User.find(params[:userid])
       @messages = Message.where('(senderid = ? AND receiverid = ?) OR (senderid = ? AND receiverid = ?)',
                                 session[:userid], params[:userid], params[:userid], session[:userid]).order('timestamp ASC')
 
       @messages.each do |message|
-        sender_id = Message.find(message.messageid).receiverid
-        sender_username = User.find(sender_id).username
-        message.content = decrypt_aes(message.content, sender_username)
+        receiver_id = Message.find(message.messageid).receiverid
+        receiver_username = User.find(receiver_id).username
+        message.content = decrypt_aes(message.content, receiver_username)
       end
 
       @show_right_partial = true
