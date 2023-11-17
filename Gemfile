@@ -1,10 +1,9 @@
-# Gemfile
-
 source 'https://rubygems.org'
 
-gem 'sinatra'
-gem 'mysql2'
-gem 'htmlbeautifier'
-gem 'sinatra-activerecord'
-gem 'activerecord'
 gem 'digest'
+gem 'mysql2'
+gem 'sinatra'
+gem 'htmlbeautifier'
+gem 'activerecord'
+gem 'sinatra-activerecord'
+gem 'chunky_png'

@@ -10,7 +10,9 @@
         <div class="d-flex align-items-baseline mb-4">
           <div class="pe-2">
             <div>
-              <div class="card card-text d-inline-block p-2 px-3 m-1"><%=message.content%>
+              <div class="card card-text d-flex flex-column p-2 px-3 m-1" style="max-width: 300px">
+                <img src="<%=message.image_url%>" alt="">
+                <p><%=message.content%></p>
               </div>
             </div>
             <div>
@@ -41,7 +43,7 @@
     <div class="input-group">
       <div class="input-group-text bg-transparent border-0">
         <label class="btn btn-light text-secondary">
-          <input type="file" accept=".png, .jpg, .jpeg" name="file"/>
+          <input type="file" accept=".png" name="file"/>
         </label>
       </div>
       <input type="text" class="form-control border-0" placeholder="Write a message..." name="content">
@@ -50,7 +52,6 @@
         <label class="btn btn-light text-secondary fas fa-lock">
           <input type="checkbox" value="benar" id="lockCheckbox" name="reverse">
         </label>
-          
       </div>
       <div class="input-group-text bg-transparent border-0">
         <button class="btn btn-light text-secondary" type="submit">
