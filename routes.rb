@@ -13,31 +13,68 @@ get '/' do
   redirect '/messages'
 end
 
-get '/messages' do
+get '/all' do
   require_login
-  @users = User.where.not(userid: session[:userid])
   @displayname = User.find(session[:userid]).displayname
+  @users = User.where.not(userid: session[:userid])
+  @search = true;
   erb :index
 end
 
-get '/messages/:userid' do
+get '/messages/?:userid?' do
   require_login
-  @users = User.where.not(userid: session[:userid])
+
+  subquery = Message.select("MAX(messageid) AS max_id")
+                   .group("LEAST(senderid, receiverid), GREATEST(senderid, receiverid)")
+
+  @users = Message.select("messages.*, users.userid, users.displayname")
+                  .joins("INNER JOIN users ON (messages.senderid = users.userid OR messages.receiverid = users.userid)")
+                  .where("(messages.senderid = ? OR messages.receiverid = ?) AND messages.messageid IN (#{subquery.to_sql})", session[:userid], session[:userid])
+                  .where.not("users.userid = ?", session[:userid])
+
   @displayname = User.find(session[:userid]).displayname
-  begin
-    @receiver = User.find(params['userid'])
-    @messages = Message.where("(senderid = ? AND receiverid = ?) OR (senderid = ? AND receiverid = ?)",
-                session[:userid], params['userid'], params['userid'], session[:userid]).order('timestamp ASC')
-    @show_right_partial = true
-    erb :index
-  rescue ActiveRecord::RecordNotFound
-    erb :index
+
+  if params[:userid]
+    begin
+      @receiver = User.find(params[:userid])
+      @messages = Message.where("(senderid = ? AND receiverid = ?) OR (senderid = ? AND receiverid = ?)",
+                    session[:userid], params[:userid], params[:userid], session[:userid]).order('timestamp ASC')
+
+      @messages.each do |message|
+        sender_id = Message.find(message.messageid).receiverid
+        sender_username = User.find(sender_id).username
+        message.content = decrypt_aes(message.content, sender_username)
+      end
+
+      @show_right_partial = true
+    rescue ActiveRecord::RecordNotFound
+      redirect '/'
+    end
   end
+
+  erb :index
 end
 
 post '/messages/:userid' do
   require_login
-  Message.create(senderid: session[:userid], receiverid: params['receiverid'], content: params['content'])
+  content = params['content']
+
+  content = encrypt_reverse(content) if params['reverse'] == 'benar'
+
+  username = User.find(params['receiverid']).username
+  content = encrypt_aes(content, username)
+  if params['file']
+    filename = params[:file][:filename]
+    file = params[:file][:tempfile]
+
+    File.open("./public/img/#{filename}", 'wb') do |f|
+      f.write(file.read)
+    end
+  end
+
+  filename = "/img/#{filename}"
+  Message.create(senderid: session[:userid], receiverid: params['receiverid'], content: content, image_url: filename)
+  params.delete('file')
   redirect "/messages/#{params['receiverid']}"
 end
 
@@ -79,6 +116,11 @@ post '/register' do
 
   User.create(username: username, password: password, displayname: displayname)
   redirect '/'
+end
+
+get '/logout' do
+  session[:userid] ? session.delete(:userid) : ''
+  redirect '/login'
 end
 
 not_found do

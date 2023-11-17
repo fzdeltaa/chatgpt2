@@ -1,6 +1,5 @@
-alphabet = 'abcdefghijklmnopqrstuvwxyz'
-
-def encryptReverse(plaintext, alphabet)
+def encrypt_reverse(plaintext)
+  alphabet = 'abcdefghijklmnopqrstuvwxyz'
   ciphertext = ''
 
   plaintext.each_char do |x|
@@ -16,5 +15,5 @@ def encryptReverse(plaintext, alphabet)
       ciphertext += x
     end
   end
-  puts ciphertext
+  ciphertext
 end

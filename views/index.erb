@@ -1,14 +1,15 @@
 <div class="row card-body" style="min-height: 100%;">
   <div class="col-4">
     <h5 style="overflow: hidden;" class="pb-1"><%=@displayname%></h5>
-    <div class="input-group">
-      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+    <form class="input-group" method="POST" action="../search">
+      <input type="search" class="form-control rounded" placeholder="Cari pengguna" aria-label="Search"
                   aria-describedby="search-addon" />
-      <button type="button" class="btn btn-outline-primary">search</button>
-    </div>
+      <button type="submit" class="btn btn-outline-primary">search</button>
+    </form>
     <div class="card-body p-4" style="height: 540px; overflow: auto;">
+    <% unless @users.empty? %>
       <ul class="list-unstyled mb-0">
-        <% @users.each do |user| %>
+          <% @users.each do |user| %>
           <% if @show_right_partial %>
             <% if user.userid == @receiver.userid %>
               <li class="p-2 border-bottom" style="background-color: #eee;">
@@ -22,13 +23,33 @@
                     <% end %>
                     <div class="d-flex flex-row">
                       <div class="pt-1">
-                        <p class="fw-bold mb-0"><%=user.displayname%></p>
+                        <p class="fw-bold mb-0" style="overflow: hidden;"><%=user.displayname%></p>
+                        <% if @search %>
+                          </div>
+                    </div>
+                        <% else %>
+                          <p class="small text-muted" style="overflow: hidden;"><%=user.content%></p>
                       </div>
                     </div>
+                    <div class="pt-1">
+                      <p class="small text-muted mb-1"><%=user.timestamp%></p>
+                    </div>
+                        <% end %>
                   </a>
                 </li>
               <% end %>
             </ul>
+            <% else %>
+          <h5 class="text-center">Buat percakapan dengan mencari user</h5>
+        <% end %>
+          </div>
+          <div class="d-flex justify-content-between">
+          <a href="../logout"><button type="button" class="btn btn-outline-danger">Logout</button></a>
+          <% if @search %>
+            <a href="/"><button type="button" class="btn btn-outline-primary">Kembali</button></a>
+          <% else %>
+            <a href="/all"><button type="button" class="btn btn-outline-primary">Lihat semua user</button></a>
+          <% end %>
           </div>
         </div>
         <!-- kanan -->
