@@ -58,23 +58,18 @@ post '/messages/:userid' do
   if params['file']
     time = Time.new
     filename = "#{time.strftime("%s")}#{rand(1..100)}.png"
-    file = params[:file][:tempfile]
-
-    File.open("./public/img/#{filename}", 'wb') do |f|
-      f.write(file.read)
-    end
+    image_path = "/img/#{filename}"
 
     if params['reverse'] == 'benar'
-      image_path = "./public/img/#{filename}"
-      newfilename = encrypt_stegano(ChunkyPNG::Image.from_file(image_path))
-      filename = "/img/#{newfilename}"
-      File.delete(image_path)
+      encrypt_stegano(ChunkyPNG::Image.from_file(params[:file][:tempfile]), "./public#{image_path}")
     else
-      filename = "/img/#{filename}"
+      File.open("./public#{image_path}", 'wb') do |f|
+        f.write(params[:file][:tempfile].read)
+      end
     end
   end
 
-  Message.create(senderid: session[:userid], receiverid: params['receiverid'], content: content, image_url: filename)
+  Message.create(senderid: session[:userid], receiverid: params['receiverid'], content: content, image_url: image_path)
   params.delete('file')
   redirect "/messages/#{params['receiverid']}"
 end
