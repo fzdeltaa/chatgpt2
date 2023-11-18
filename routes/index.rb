@@ -1,3 +1,6 @@
+require_relative '../gcs_config'
+bucket = GCSConfig.bucket
+
 get '/all' do
   require_login
   @displayname = User.find(session[:userid]).displayname
@@ -36,6 +39,8 @@ get '/messages/?:userid?' do
         receiver_id = Message.find(message.messageid).receiverid
         receiver_username = User.find(receiver_id).username
         message.content = decrypt_aes(message.content, receiver_username)
+        filename = bucket.file message.image_url
+        message.image_url = filename.signed_url(expires: 3600)
       end
 
       @show_right_partial = true
@@ -58,19 +63,11 @@ post '/messages/:userid' do
   if params['file']
     time = Time.new
     filename = "#{time.strftime("%s")}#{rand(1..100)}.png"
-    file = params[:file][:tempfile]
-
-    File.open("./public/img/#{filename}", 'wb') do |f|
-      f.write(file.read)
-    end
 
     if params['reverse'] == 'benar'
-      image_path = "./public/img/#{filename}"
-      newfilename = encrypt_stegano(ChunkyPNG::Image.from_file(image_path))
-      filename = "/img/#{newfilename}"
-      File.delete(image_path)
+      encrypt_stegano(ChunkyPNG::Image.from_file(params[:file][:tempfile]), filename)
     else
-      filename = "/img/#{filename}"
+      bucket.create_file params[:file][:tempfile], filename
     end
   end
 
