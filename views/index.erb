@@ -1,11 +1,11 @@
 <div class="row card-body" style="min-height: 100%;">
   <div class="col-4">
     <h5 style="overflow: hidden;" class="pb-1"><%=@displayname%></h5>
-    <form class="input-group" method="POST" action="../search">
+    <%# <form class="input-group" method="POST" action="../search">
       <input type="search" class="form-control rounded" placeholder="Cari pengguna" aria-label="Search"
                   aria-describedby="search-addon" />
       <button type="submit" class="btn btn-outline-primary">search</button>
-    </form>
+    </form> %>
     <div class="card-body p-4" style="height: 540px; overflow: auto;">
     <% unless @users.empty? %>
       <ul class="list-unstyled mb-0">
