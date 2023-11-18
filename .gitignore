@@ -3,3 +3,4 @@ Gemfile.lock
 database.yml
 credentials.json
 Gemfile.lock
+gcs_config.rb
