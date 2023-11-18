@@ -18,7 +18,8 @@ get '/messages/?:userid?' do
                   .where.not('users.userid = ?', session[:userid])
   @users.each do |user|
     receiver_username = User.find(user.receiverid).username
-    user.content = encrypt_reverse(decrypt_aes(user.content, receiver_username))
+    user.content = decrypt_aes(user.content, receiver_username)
+    user.content = encrypt_reverse(user.content) if user.dobel == 1
   end
 
   @displayname = User.find(session[:userid]).displayname
