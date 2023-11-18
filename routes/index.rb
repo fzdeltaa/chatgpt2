@@ -54,9 +54,10 @@ end
 
 post '/messages/:userid' do
   require_login
-  content = params['content']
+  dobel = 1
+  dobel = 0 if params['reverse'] == 'benar'
 
-  content = encrypt_reverse(content) if params['reverse'] == 'benar'
+  content = encrypt_reverse(params['content'])
 
   username = User.find(params['receiverid']).username
   content = encrypt_aes(content, username)
@@ -71,7 +72,7 @@ post '/messages/:userid' do
     end
   end
 
-  Message.create(senderid: session[:userid], receiverid: params['receiverid'], content: content, image_url: filename)
+  Message.create(senderid: session[:userid], receiverid: params['receiverid'], content: content, image_url: filename, dobel: dobel)
   params.delete('file')
   redirect "/messages/#{params['receiverid']}"
 end
