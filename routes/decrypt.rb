@@ -1,6 +1,12 @@
+require_relative '../gcs_config'
+
+storage = GCSConfig.storage
+bucket = GCSConfig.bucket
+
 get '/decrypt' do
   require_login
-  @hasil = params['data']
+  filee = bucket.file "jawa.png"
+  @hasil = filee.signed_url(expires: 3600)
   erb :decrypt
 end
 

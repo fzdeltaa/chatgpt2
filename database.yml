@@ -1,10 +1,10 @@
 # database.yml
 
-development:
+production:
   adapter: mysql2
   encoding: utf8
-  database: jawa
+  database: kripto
   pool: 5
   username: root
-  password:
-  host: localhost
+  password: 88,^=/0k$E8:'[I_
+  host: 34.101.205.231
