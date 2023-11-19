@@ -15,7 +15,7 @@ post '/decrypt' do
     decrypt_stegano(ChunkyPNG::Image.from_file(params[:file][:tempfile]), "./public#{image_path}")
   end
   scheduler.at(Time.now + 300) do
-    File.delete(image_path)
+    File.delete("./public#{image_path}")
     File.delete(filename)
   end
   redirect "/decrypt?data=#{image_path}"
