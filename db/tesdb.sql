@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2023 at 03:59 PM
+-- Generation Time: Nov 19, 2023 at 04:52 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `jawa`
+-- Database: `tesdb`
 --
 
 -- --------------------------------------------------------
@@ -33,7 +33,8 @@ CREATE TABLE `messages` (
   `receiverid` int(11) DEFAULT NULL,
   `content` text DEFAULT NULL,
   `image_url` varchar(255) DEFAULT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `dobel` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -76,13 +77,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `messageid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `messageid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Constraints for dumped tables
