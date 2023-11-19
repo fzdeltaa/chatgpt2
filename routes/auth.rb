@@ -13,7 +13,8 @@ post '/login' do
     session[:userid] = user.userid
     redirect '/'
   else
-    redirect '/login'
+    error = 'username/password salah'
+    redirect "/login?error=#{URI.encode_www_form_component(error)}"
   end
 end
 

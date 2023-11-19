@@ -3,6 +3,9 @@
     <h4 class="mt-1 mb-5 pb-1">LOGIN</h4>
   </div>
   <form action="" method="post">
+    <% if params['error'] %>
+      <h5 class="text-center text-danger"><%= params['error'] %></h5>
+    <% end %>
     <div class="form-outline mb-4">
       <label class="form-label" for="form2Example11">Username</label>
       <input type="text" id="form2Example11" class="form-control" name="username" required/>
